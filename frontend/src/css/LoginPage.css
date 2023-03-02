@@ -1,0 +1,14 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  width: 100vw;
+  /* background-color: red; */
+}
+
+.login-element {
+  height: 500px;
+  width: 400px;
+  background-color: var(--white);
+}
