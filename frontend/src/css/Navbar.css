@@ -4,7 +4,7 @@
   align-items: baseline;
   justify-content: space-between;
   padding: 20px var(--horizontal-margin);
-  background-color: var(--white);
+  background-color: var(--grey);
 }
 
 .navbar-right-container {
@@ -13,7 +13,7 @@
 }
 
 .navbar-link {
-  color: var(--black);
+  color: var(--white);
 }
 
 .navbar-link:hover {

@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--lightgrey);
+  background-color: var(--white);
 }
 
 code {
@@ -27,8 +27,9 @@ h1, h2, h3, h4 {
 :root {
   --horizontal-margin: 80px;
   --red: #EC483F;
+  /* --lightred: #ff4e45; */
   --black: black;
   --white: white;
-  --lightgrey: #F3F3F3;
+  --lightgrey: #e7e7e7;
   --grey: #2E2E2E;
 }
