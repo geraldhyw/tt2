@@ -85,7 +85,21 @@ const updateClaim = async (req, res) => {
 
 // DELETE single claim
 const deleteClaim = async (req, res) => {
-  
+
+  // retrieve values from body
+  const { ClaimID, InsuranceID } = req.body
+
+  // check if EmployeeID corresponds to existing InsurancePolicy
+  const { EmployeeID } = req.params
+  const policy = await Policy.find({ InsuranceID }).select({'EmployeeID': 1})
+  const isCorrectEmployeeID = policy[0].EmployeeID === parseInt(EmployeeID)
+  if (!isCorrectEmployeeID) {
+    return res.status(400).json({error: "You do not own this insurance policy!"})
+  }
+
+  // delete claim
+  const claim = await Claim.findOneAndDelete({ ClaimID })
+  res.status(200).json({claim})
 }
 
 module.exports = {
