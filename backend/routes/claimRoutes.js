@@ -4,15 +4,15 @@ const { getAllClaims, createClaim, updateClaim, deleteClaim } = require('../cont
 const router = express.Router()
 
 // GET all claims
-router.post('/', getAllClaims)
+router.get('/:EmployeeID', getAllClaims)
 
 // POST single claim
-router.post('/claims/:EmployeeID', createClaim)
+router.post('/:EmployeeID', createClaim)
 
 // PATCH single claim
-router.post('/claims/:EmployeeID', updateClaim)
+router.patch('/:EmployeeID', updateClaim)
 
 // DELETE single claim
-router.post('/claims/:EmployeeID', deleteClaim)
+router.delete('/:EmployeeID', deleteClaim)
 
 module.exports = router
