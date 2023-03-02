@@ -40,7 +40,7 @@ const claimSchema = new Schema({
     type: Number,
     required: false
   },
-  status: {
+  Status: {
     type: String,
     required: true
   },

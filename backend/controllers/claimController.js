@@ -27,23 +27,24 @@ const getAllClaims = async (req, res) => {
 // POST single claim
 const createClaim = async (req, res) => {
 
-  // // retrieve values from body
-  // const { InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp } = req.body
+  // retrieve values from body
+  const { InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID } = req.body
 
-  // // set values individually
-  // const PreviousClaimID = 0
-  // const Status = 'Pending'
-  // const LastEditedClaimDate = new Date().toJSON();
+  // set values individually
+  const Status = "Pending"
+  const LastEditedClaimDate = new Date().toJSON();
 
-  // // create unique ClaimID
-  // const claims = await Claim.find().sort({createdAt: -1})
-  // console.log(claims)
+  // create unique ClaimID
+  const highestIDClaim = await Claim.findOne().sort({ClaimID: -1}).select({'ClaimID': 1})
+  const ClaimID = highestIDClaim.ClaimID + 1
 
-  // const claim = { InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate }
-  // console.log(claim)
-
-  // res.status(200)
-
+  // create claim
+  try {
+    const claim = await Claim.create({ ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate })
+    res.status(200).json({claim})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
 }
 
 // PATCH single claim
