@@ -21,7 +21,7 @@ const getAllClaims = async (req, res) => {
 
   const claims = await Claim.find({InsuranceID: { $in: insuranceIDs } })
 
-  res.status(200).json({ claims })
+  res.status(200).json({ claims, policies })
 }
 
 // POST single claim
@@ -29,6 +29,14 @@ const createClaim = async (req, res) => {
 
   // retrieve values from body
   const { InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID } = req.body
+
+  // check if EmployeeID corresponds to existing InsurancePolicy
+  const { EmployeeID } = req.params
+  const policy = await Policy.find({ InsuranceID }).select({'EmployeeID': 1})
+  const isCorrectEmployeeID = policy[0].EmployeeID === parseInt(EmployeeID)
+  if (!isCorrectEmployeeID) {
+    return res.status(400).json({error: "You do not own this insurance policy!"})
+  }
 
   // set values individually
   const Status = "Pending"
@@ -43,18 +51,41 @@ const createClaim = async (req, res) => {
     const claim = await Claim.create({ ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate })
     res.status(200).json({claim})
   } catch (error) {
-    res.status(400).json({error: error.message})
+    return res.status(400).json({error: error.message})
   }
 }
 
 // PATCH single claim
 const updateClaim = async (req, res) => {
 
+  // retrieve values from body
+  const { ClaimID, InsuranceID } = req.body
+
+  // check if EmployeeID corresponds to existing InsurancePolicy
+  const { EmployeeID } = req.params
+  const policy = await Policy.find({ InsuranceID }).select({'EmployeeID': 1})
+  const isCorrectEmployeeID = policy[0].EmployeeID === parseInt(EmployeeID)
+  if (!isCorrectEmployeeID) {
+    return res.status(400).json({error: "You do not own this insurance policy!"})
+  }
+
+  // create claim
+  try {
+    const claim = await Claim.findOneAndUpdate({ ClaimID }, {
+      ...req.body, 
+      Status: "Pending",
+      LastEditedClaimDate: new Date().toJSON()
+    })
+    res.status(200).json({claim})
+  } catch (error) {
+    return res.status(400).json({error: error.message})
+  }
+
 }
 
 // DELETE single claim
 const deleteClaim = async (req, res) => {
-
+  
 }
 
 module.exports = {
