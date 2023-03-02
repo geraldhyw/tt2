@@ -1,0 +1,25 @@
+.navbar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px var(--horizontal-margin);
+  background-color: var(--white);
+}
+
+.navbar-right-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.navbar-link {
+  color: var(--black);
+}
+
+.navbar-link:hover {
+  color: var(--red);
+}
+
+.navbar-right {
+  padding-left: 20px;
+}

@@ -2,11 +2,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import CreateClaimPage from './pages/CreateClaimPage';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <Navbar />
         <div className="pages">
           <Routes>
             <Route 
