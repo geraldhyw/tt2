@@ -23,13 +23,42 @@ h1, h2, h3, h4 {
   margin: 0;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
 /* global variables */
 :root {
   --horizontal-margin: 80px;
   --red: #EC483F;
-  /* --lightred: #ff4e45; */
+  --lightred: #ff4e45;
   --black: black;
   --white: white;
   --lightgrey: #e7e7e7;
   --grey: #2E2E2E;
+}
+
+.btn {
+  border: none;
+  background-color: var(--red);
+  color: var(--white);
+  height: 50px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: var(--lightred);
+}
+
+btn:focus {
+  background-color: var(--red);
 }
