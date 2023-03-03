@@ -32,11 +32,16 @@ const createClaim = async (req, res) => {
 
   // check if EmployeeID corresponds to existing InsurancePolicy
   const { EmployeeID } = req.params
-  const policy = await Policy.find({ InsuranceID }).select({'EmployeeID': 1})
-  const isCorrectEmployeeID = policy[0].EmployeeID === parseInt(EmployeeID)
-  if (!isCorrectEmployeeID) {
+  const policy = await Policy.find({ InsuranceID })
+  if (!policy) {
     return res.status(400).json({error: "You do not own this insurance policy!"})
   }
+
+  // const policy = await Policy.find({ InsuranceID }).select({'EmployeeID': 1})
+  // const isCorrectEmployeeID = policy[0].EmployeeID === parseInt(EmployeeID)
+  // if (!isCorrectEmployeeID) {
+  //   return res.status(400).json({error: "You do not own this insurance policy!"})
+  // }
 
   // set values individually
   const Status = "Pending"
@@ -50,6 +55,7 @@ const createClaim = async (req, res) => {
   try {
     const claim = await Claim.create({ ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate })
     res.status(200).json({claim})
+    console.log(claim)
   } catch (error) {
     return res.status(400).json({error: error.message})
   }

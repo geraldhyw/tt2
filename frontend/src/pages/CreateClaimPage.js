@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import '../css/CreateClaimPage.css'
+import { useClaimContext } from '../hooks/useClaimContext'
+import { useNavigate } from 'react-router-dom'
 
 const CreateClaimPage = () => {
   const [FirstName, setFirstName] = useState('')
@@ -12,8 +14,15 @@ const CreateClaimPage = () => {
 
   const [showPreviousClaimID, setShowPreviousClaimID] = useState(false)
 
-  const handleCreateClaim = (e) => {
+  const {claims, dispatch} = useClaimContext()
+  const navigate = useNavigate()
+
+  const EmployeeID = 58001005
+  const InsuranceID = 1015
+
+  const handleCreateClaim = async (e) => {
     e.preventDefault()
+
     console.log(FirstName)
     console.log(LastName)
     console.log(ExpenseDate)
@@ -21,6 +30,31 @@ const CreateClaimPage = () => {
     console.log(Purpose)
     console.log(FollowUp)
     console.log(PreviousClaimID)
+
+    if (FollowUp === false) {
+      setPreviousClaimID(null)
+    }
+
+    // create claim
+    const claim = { InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID}
+
+    const response = await fetch('/api/claims/' + EmployeeID, {
+      method: 'POST',
+      body: JSON.stringify(claim),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const json = await response.json()
+
+    if (!response.ok) {
+      console.log(json.error)
+    } else {
+      console.log(json)
+      dispatch({ type: 'CREATE_CLAIM', payload: json })
+      console.log('claim created!')
+      // navigate('/dashboard', { replace: true })
+    }
   }
 
   return (

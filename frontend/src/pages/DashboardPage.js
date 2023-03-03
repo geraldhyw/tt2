@@ -18,12 +18,12 @@ const DashboardPage = () => {
     }
 
     fetchClaims()
-  }, [])
+  }, [claims])
 
   return (
     <div className="dashboard-container">
       {claims.map((claim) => (
-        <div className="dashboard-card-container">
+        <div className="dashboard-card-container" key={claim.ClaimID}>
           <ClaimCard claim={claim}/>
         </div>
       ))}

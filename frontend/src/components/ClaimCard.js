@@ -2,10 +2,7 @@ import React from 'react'
 import '../css/ClaimCard.css'
 
 const ClaimCard = ({claim}) => {
-  // const Status = 'Pending'
   const { ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate } = claim
-
-  console.log(claim)
 
   const handleEdit = (e) => {
 
