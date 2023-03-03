@@ -1,15 +1,37 @@
 import React from 'react'
 import '../css/ClaimCard.css'
+import { useClaimContext } from '../hooks/useClaimContext'
 
 const ClaimCard = ({claim}) => {
   const { ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate } = claim
+
+  const EmployeeID = 58001005
+
+  const {claims, dispatch} = useClaimContext()
 
   const handleEdit = (e) => {
 
   }
 
   const handleDelete = (e) => {
-    
+    const deleteClaim = async () => {
+      console.log(ClaimID, InsuranceID)
+      const response = await fetch('/api/claims/' + EmployeeID, {
+        method: 'DELETE',
+        body: JSON.stringify({ ClaimID, InsuranceID }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'DELETE_CLAIM', payload: { json }})
+        console.log('claim deleted')
+      }
+    }
+
+    deleteClaim()
   }
 
   return (
