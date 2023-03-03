@@ -1,0 +1,7 @@
+.dashboard-container {
+  padding: 20px var(--horizontal-margin);
+}
+
+.dashboard-card-container {
+  margin-bottom: 20px;
+}
