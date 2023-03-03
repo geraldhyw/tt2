@@ -1,0 +1,49 @@
+.create-claim-container {
+  margin: 20px var(--horizontal-margin);
+}
+
+.create-claim-input-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.create-claim-field {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  margin-bottom: 8px;
+}
+
+.create-claim-field-special {
+  display: flex;
+  width: 40vw;
+  justify-content: space-around;
+}
+
+
+.create-claim-label {
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.create-claim-input, .create-claim-input-followup {
+  width: auto;
+  height: 25px;
+  margin-bottom: 8px;
+  outline: none;
+  padding: 0px 6px;
+}
+
+.create-claim-input-followup {
+  width: 25px;
+}
+
+.create-claim-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.create-claim-button {
+  margin-top: 20px;
+  padding: 4px 40px;
+}
