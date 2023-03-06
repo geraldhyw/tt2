@@ -56,7 +56,7 @@ const ClaimCard = ({claim}) => {
       {/* bottom */}
       <div className="card-bot">
         <h3>Last edited: {LastEditedClaimDate}</h3>
-        <h3 className={'status ' + Status.toLowerCase()}>{Status}</h3>
+        <h3 className={'status ' + Status}>{Status}</h3>
       </div>
     </div>
   )

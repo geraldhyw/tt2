@@ -24,7 +24,7 @@ const DashboardPage = () => {
     <div className="dashboard-container">
       {claims.map((claim) => (
         <div className="dashboard-card-container" key={claim.ClaimID}>
-          <ClaimCard claim={claim}/>
+          <ClaimCard claim={claim} key={claim.ClaimID}/>
         </div>
       ))}
     </div>
