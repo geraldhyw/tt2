@@ -19,5 +19,5 @@ In the "backend" directory, you can run:
 
 ### `npm run dev`
 
-Runs the server at port 4000 [http://localhost:4000].\
+Runs the server at port 4000 http://localhost:4000.\
 This runs nodemon and the page will automatically reload when you make changes.\
