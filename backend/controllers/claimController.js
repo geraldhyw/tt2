@@ -66,6 +66,7 @@ const updateClaim = async (req, res) => {
 
   // retrieve values from body
   const { ClaimID, InsuranceID } = req.body
+  console.log(req.body)
 
   // check if EmployeeID corresponds to existing InsurancePolicy
   const { EmployeeID } = req.params
@@ -82,6 +83,7 @@ const updateClaim = async (req, res) => {
       LastEditedClaimDate: new Date().toJSON()
     })
     res.status(200).json({claim})
+    console.log(claim)
   } catch (error) {
     return res.status(400).json({error: error.message})
   }

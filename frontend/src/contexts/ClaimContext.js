@@ -16,6 +16,17 @@ export const claimReducer = (state, action) => {
       return {
         claims: state.claims.filter(c => c.ClaimID !== action.payload.ClaimID)
       }
+    case 'UPDATE_CLAIM':
+      let claims = state.claims
+      for (let i = 0; i < state.claims.length; i++) {
+        if (claims.ClaimID === action.payload.ClaimID) {
+          claims[i] = action.payload
+          break
+        }
+      }
+      return {
+        claims
+      }
     default:
       return state.claims
   }

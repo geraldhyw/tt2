@@ -1,21 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/CreateClaimPage.css'
 import { useClaimContext } from '../hooks/useClaimContext'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const CreateClaimPage = () => {
+
+  // set variables
   const [FirstName, setFirstName] = useState('')
   const [LastName, setLastName] = useState('')
   const [ExpenseDate, setExpenseDate] = useState('')
   const [Amount, setAmount] = useState(0)
   const [Purpose, setPurpose] = useState('')
-  const [FollowUp, setFollowUp] = useState(false)
+  const [FollowUp, setFollowUp] = useState(true)
   const [PreviousClaimID, setPreviousClaimID] = useState('')
 
-  const [showPreviousClaimID, setShowPreviousClaimID] = useState(false)
+  const [showPreviousClaimID, setShowPreviousClaimID] = useState(true)
+  const [ClaimID, setClaimID] = useState(null)
 
-  const {claims, dispatch} = useClaimContext()
   const navigate = useNavigate()
+  const { state } = useLocation()
+
+  // check if edit claim or create claim
+  useEffect(() => {
+    // if edit claim, overwrite variables
+    if (state) {
+      console.log('yes')
+      setFirstName(state.FirstName)
+      setLastName(state.LastName)
+      setExpenseDate(state.ExpenseDate)
+      setAmount(state.Amount)
+      setPurpose(state.Purpose)
+      setFollowUp(state.FollowUp)
+      setPreviousClaimID(state.PreviousClaimID)
+      setShowPreviousClaimID(true)
+      setClaimID(state.ClaimID)
+    }
+  }, [])
+  
+  const {claims, dispatch} = useClaimContext()
 
   const EmployeeID = 58001005
   const InsuranceID = 1015
@@ -23,37 +45,51 @@ const CreateClaimPage = () => {
   const handleCreateClaim = async (e) => {
     e.preventDefault()
 
-    console.log(FirstName)
-    console.log(LastName)
-    console.log(ExpenseDate)
-    console.log(Amount)
-    console.log(Purpose)
-    console.log(FollowUp)
-    console.log(PreviousClaimID)
-
     if (FollowUp === false) {
       setPreviousClaimID(null)
     }
 
-    // create claim
-    const claim = { InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID}
 
-    const response = await fetch('/api/claims/' + EmployeeID, {
-      method: 'POST',
-      body: JSON.stringify(claim),
-      headers: {
-        'Content-Type': 'application/json'
+    if (!state) {
+      // CREATE CLAIM
+      const claim = { InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID}
+      const response = await fetch('/api/claims/' + EmployeeID, {
+        method: 'POST',
+        body: JSON.stringify(claim),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json = await response.json()
+  
+      if (!response.ok) {
+        console.log(json.error)
+      } else {
+        console.log(json)
+        dispatch({ type: 'CREATE_CLAIM', payload: json })
+        console.log('claim created!')
+        navigate('/dashboard', { replace: true })
       }
-    })
-    const json = await response.json()
-
-    if (!response.ok) {
-      console.log(json.error)
     } else {
-      console.log(json)
-      dispatch({ type: 'CREATE_CLAIM', payload: json })
-      console.log('claim created!')
-      // navigate('/dashboard', { replace: true })
+      // EDIT CLAIM
+      const claim = { ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID}
+      const response = await fetch('/api/claims/' + EmployeeID, {
+        method: 'PATCH',
+        body: JSON.stringify(claim),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json = await response.json()
+  
+      if (!response.ok) {
+        console.log(json.error)
+      } else {
+        console.log(json)
+        dispatch({ type: 'UPDATE_CLAIM', payload: json })
+        console.log('claim updated!')
+        navigate('/dashboard', { replace: true })
+      }
     }
   }
 
@@ -88,7 +124,7 @@ const CreateClaimPage = () => {
             <input 
               className="create-claim-input"
               type="date"
-              value={ExpenseDate}
+              value={ExpenseDate.substring(0,10)}
               onChange={(e) => setExpenseDate(e.target.value)}
             />
           </div>
@@ -120,6 +156,7 @@ const CreateClaimPage = () => {
                 className="create-claim-input-followup"
                 type="checkbox"
                 value={FollowUp}
+                defaultChecked={FollowUp}
                 onChange={(e) => {
                   setFollowUp(!FollowUp)
                   setPreviousClaimID('')
@@ -146,7 +183,7 @@ const CreateClaimPage = () => {
         
         <div className="create-claim-button-container">
           <button className="create-claim-button btn" type="submit">
-            <h3>Create Claim</h3>
+            <h3>{state ? 'Update Claim' : 'Create Claim'}</h3>
           </button>
         </div>
       </form>

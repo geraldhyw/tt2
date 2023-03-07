@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../css/ClaimCard.css'
 import { useClaimContext } from '../hooks/useClaimContext'
 
@@ -8,9 +9,11 @@ const ClaimCard = ({claim}) => {
   const EmployeeID = 58001005
 
   const {claims, dispatch} = useClaimContext()
+  const navigate = useNavigate()
 
   const handleEdit = (e) => {
-
+    claim.FollowUp = true
+    navigate('/create-claim', { state: claim })
   }
 
   const handleDelete = (e) => {
