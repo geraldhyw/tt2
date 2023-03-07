@@ -49,7 +49,9 @@ const ClaimCard = ({claim}) => {
       <div className="card-top">
         <h2>ClaimID: {ClaimID}</h2>
         <div>
-          <span className="material-symbols-outlined icon-button" onClick={(e) => handleEdit(e)}>edit</span>
+          { (Status !== "Approved") &&
+            <span className="material-symbols-outlined icon-button" onClick={(e) => handleEdit(e)}>edit</span>
+          }
           <span className="material-symbols-outlined icon-button" onClick={(e) => handleDelete(e)}>delete</span>
         </div>
       </div>

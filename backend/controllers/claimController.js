@@ -4,7 +4,6 @@ const Policy = require('../models/policyModel')
 // GET all claims
 const getAllClaims = async (req, res) => {
   const { EmployeeID } = req.params
-  console.log(EmployeeID)
 
   const policies = await Policy.find({ EmployeeID }).select({'InsuranceID': 1, 'InsuranceType': 1})
 

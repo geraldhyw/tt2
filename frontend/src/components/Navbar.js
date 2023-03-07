@@ -21,7 +21,7 @@ const Navbar = () => {
       </div>
 
       
-      { user ? (
+      { user && (
         <div className='navbar-right-container'>
           <Link to='/dashboard' className='navbar-link navbar-right'>
             <h2>Claims</h2>
@@ -32,10 +32,6 @@ const Navbar = () => {
           <Link to='/login' className='navbar-link navbar-right'>
             <h2 onClick={handleLogout}>Logout</h2>
           </Link>
-        </div>
-      ) : (
-        <div className='navbar-right-container'>
-          Login
         </div>
       )}
     </header>
