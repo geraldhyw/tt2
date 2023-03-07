@@ -37,12 +37,6 @@ const createClaim = async (req, res) => {
     return res.status(400).json({error: "You do not own this insurance policy!"})
   }
 
-  // const policy = await Policy.find({ InsuranceID }).select({'EmployeeID': 1})
-  // const isCorrectEmployeeID = policy[0].EmployeeID === parseInt(EmployeeID)
-  // if (!isCorrectEmployeeID) {
-  //   return res.status(400).json({error: "You do not own this insurance policy!"})
-  // }
-
   // set values individually
   const Status = "Pending"
   const LastEditedClaimDate = new Date().toJSON();
