@@ -19,5 +19,5 @@ You may also see any lint errors in the console.
 
 #### `npm run dev`
 
-Runs the server at port 4000 http://localhost:4000.
+Runs the server at http://localhost:4000 port 4000.\
 This runs nodemon and the page will automatically reload when you make changes.
