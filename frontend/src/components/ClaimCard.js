@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/ClaimCard.css'
 import { useClaimContext } from '../hooks/useClaimContext'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const ClaimCard = ({claim}) => {
   const { ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate } = claim
@@ -58,7 +59,8 @@ const ClaimCard = ({claim}) => {
 
       {/* bottom */}
       <div className="card-bot">
-        <h3>Last edited: {LastEditedClaimDate}</h3>
+      
+        <h3>Last edited: {formatDistanceToNow(new Date(LastEditedClaimDate), { addSuffix: true })}</h3>
         <h3 className={'status ' + Status}>{Status}</h3>
       </div>
     </div>
