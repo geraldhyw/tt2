@@ -7,7 +7,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 const ClaimCard = ({claim}) => {
   const { ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate } = claim
 
-  const EmployeeID = localStorage.getItem('EmployeeID')
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const {claims, dispatch} = useClaimContext()
   const navigate = useNavigate()
@@ -18,13 +18,18 @@ const ClaimCard = ({claim}) => {
   }
 
   const handleDelete = (e) => {
+    if (!user) {
+      return 
+    }
+
     const deleteClaim = async () => {
       console.log(ClaimID, InsuranceID)
-      const response = await fetch('/api/claims/' + EmployeeID, {
+      const response = await fetch('/api/claims/' + user.EmployeeID, {
         method: 'DELETE',
         body: JSON.stringify({ ClaimID, InsuranceID }),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
         }
       })
       const json = await response.json()
@@ -59,7 +64,8 @@ const ClaimCard = ({claim}) => {
       {/* bottom */}
       <div className="card-bot">
       
-        <h3>Last edited: {formatDistanceToNow(new Date(LastEditedClaimDate), { addSuffix: true })}</h3>
+        <h3>Last edited: {LastEditedClaimDate}</h3>
+        {/* <h3>Last edited: {formatDistanceToNow(new Date(LastEditedClaimDate), { addSuffix: true })}</h3> */}
         <h3 className={'status ' + Status}>{Status}</h3>
       </div>
     </div>

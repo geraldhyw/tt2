@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const CreateClaimPage = () => {
 
+  const user = JSON.parse(localStorage.getItem('user'))
+
   // set variables
   const [FirstName, setFirstName] = useState('')
   const [LastName, setLastName] = useState('')
@@ -46,6 +48,10 @@ const CreateClaimPage = () => {
   const handleCreateClaim = async (e) => {
     e.preventDefault()
 
+    if (!user) {
+      return
+    }
+
     if (FollowUp === false) {
       setPreviousClaimID(null)
     }
@@ -58,7 +64,8 @@ const CreateClaimPage = () => {
         method: 'POST',
         body: JSON.stringify(claim),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
         }
       })
       const json = await response.json()
@@ -78,7 +85,8 @@ const CreateClaimPage = () => {
         method: 'PATCH',
         body: JSON.stringify(claim),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
         }
       })
       const json = await response.json()

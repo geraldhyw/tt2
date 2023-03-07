@@ -5,11 +5,15 @@ import { useClaimContext } from '../hooks/useClaimContext'
 
 const DashboardPage = () => {
   const {claims, dispatch} = useClaimContext()
-  const EmployeeID = localStorage.getItem('EmployeeID')
+  const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
     const fetchClaims = async () => {
-      const response = await fetch('/api/claims/' + EmployeeID)
+      const response = await fetch('/api/claims/' + user.EmployeeID, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       const json = await response.json()
 
       if (response.ok) {
@@ -17,8 +21,10 @@ const DashboardPage = () => {
       }
     }
 
-    fetchClaims()
-  }, [claims])
+    if (user) {
+      fetchClaims()
+    }
+  }, [claims, user])
 
   return (
     <div className="dashboard-container">

@@ -4,6 +4,7 @@ const Policy = require('../models/policyModel')
 // GET all claims
 const getAllClaims = async (req, res) => {
   const { EmployeeID } = req.params
+  console.log(EmployeeID)
 
   const policies = await Policy.find({ EmployeeID }).select({'InsuranceID': 1, 'InsuranceType': 1})
 
@@ -55,7 +56,6 @@ const createClaim = async (req, res) => {
   try {
     const claim = await Claim.create({ ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate })
     res.status(200).json({claim})
-    console.log(claim)
   } catch (error) {
     return res.status(400).json({error: error.message})
   }
@@ -83,7 +83,6 @@ const updateClaim = async (req, res) => {
       LastEditedClaimDate: new Date().toJSON()
     })
     res.status(200).json({claim})
-    console.log(claim)
   } catch (error) {
     return res.status(400).json({error: error.message})
   }

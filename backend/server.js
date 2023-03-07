@@ -6,7 +6,6 @@ const claimRoutes = require('./routes/claimRoutes')
 
 const app = express()
 
-
 mongoose.connect(process.env.MONGO_URI)
 	.then(() => {
 		app.listen(process.env.PORT, () => {
