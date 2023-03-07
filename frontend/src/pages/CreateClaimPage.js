@@ -16,6 +16,7 @@ const CreateClaimPage = () => {
 
   const [showPreviousClaimID, setShowPreviousClaimID] = useState(true)
   const [ClaimID, setClaimID] = useState(null)
+  const [InsuranceID, setInsuranceID] = useState('')
 
   const navigate = useNavigate()
   const { state } = useLocation()
@@ -34,13 +35,13 @@ const CreateClaimPage = () => {
       setPreviousClaimID(state.PreviousClaimID)
       setShowPreviousClaimID(true)
       setClaimID(state.ClaimID)
+      setInsuranceID(state.InsuranceID)
     }
   }, [])
   
   const {claims, dispatch} = useClaimContext()
 
-  const EmployeeID = 58001005
-  const InsuranceID = 1015
+  const EmployeeID = localStorage.getItem('EmployeeID')
 
   const handleCreateClaim = async (e) => {
     e.preventDefault()
@@ -141,6 +142,15 @@ const CreateClaimPage = () => {
 
         <div className="create-claim-input-row">
           <div className="create-claim-field">
+            <label className="create-claim-label">Insurance ID</label>
+            <input 
+              className="create-claim-input"
+              type="number"
+              value={InsuranceID}
+              onChange={(e) => setInsuranceID(e.target.value)}
+            />
+          </div>
+          <div className="create-claim-field">
             <label className="create-claim-label">Purpose</label>
             <input 
               className="create-claim-input"
@@ -149,6 +159,9 @@ const CreateClaimPage = () => {
               onChange={(e) => setPurpose(e.target.value)}
             />
           </div>
+        </div>
+
+        <div className="create-claim-input-row">
           <div className="create-claim-field-special">
             <div className="create-claim-field">
               <label className="create-claim-label">FollowUp</label>
@@ -177,9 +190,9 @@ const CreateClaimPage = () => {
             ) : (
               <div></div>
             )}
-            
           </div>
         </div>
+        
         
         <div className="create-claim-button-container">
           <button className="create-claim-button btn" type="submit">

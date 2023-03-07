@@ -7,7 +7,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 const ClaimCard = ({claim}) => {
   const { ClaimID, InsuranceID, FirstName, LastName, ExpenseDate, Amount, Purpose, FollowUp, PreviousClaimID, Status, LastEditedClaimDate } = claim
 
-  const EmployeeID = 58001005
+  const EmployeeID = localStorage.getItem('EmployeeID')
 
   const {claims, dispatch} = useClaimContext()
   const navigate = useNavigate()
@@ -42,7 +42,7 @@ const ClaimCard = ({claim}) => {
     <div className="card-container">
       {/* top */}
       <div className="card-top">
-        <h2>InsuranceType</h2>
+        <h2>ClaimID: {ClaimID}</h2>
         <div>
           <span className="material-symbols-outlined icon-button" onClick={(e) => handleEdit(e)}>edit</span>
           <span className="material-symbols-outlined icon-button" onClick={(e) => handleDelete(e)}>delete</span>
@@ -52,7 +52,6 @@ const ClaimCard = ({claim}) => {
       {/* middle */}
       <div className="card-mid">
         <h3>InsuranceID: {InsuranceID}</h3>
-        <h3>ClaimID: {ClaimID}</h3>
         <h3>Amount: {Amount}</h3>
         <h3>Purpose: {Purpose}</h3>
       </div>

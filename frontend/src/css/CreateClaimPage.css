@@ -16,7 +16,7 @@
 
 .create-claim-field-special {
   display: flex;
-  width: 40vw;
+  width: 100%;
   justify-content: space-around;
 }
 

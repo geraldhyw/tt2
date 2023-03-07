@@ -1,15 +1,39 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../css/LoginPage.css'
 
 const LoginPage = () => {
   const [EmployeeID, setEmployeeID] = useState('')
   const [Password, setPassword] = useState('')
+  const navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     console.log(EmployeeID, Password)
 
     // call async api call here
+    try {
+      const response = await fetch('/api/user/login', {
+        method: 'POST',
+        body: JSON.stringify({ EmployeeID, Password }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const json = await response.json()
+      console.log(json)
+
+      // store into local storage
+      localStorage.setItem('token', json.token)
+      localStorage.setItem('EmployeeID', json.EmployeeID)
+
+      navigate('/dashboard', {replace: true})
+
+    } catch (error) {
+      console.log(error)
+    }
+
+    
   }
 
   return (

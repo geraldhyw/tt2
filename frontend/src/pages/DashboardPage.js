@@ -5,7 +5,7 @@ import { useClaimContext } from '../hooks/useClaimContext'
 
 const DashboardPage = () => {
   const {claims, dispatch} = useClaimContext()
-  const EmployeeID = 58001005
+  const EmployeeID = localStorage.getItem('EmployeeID')
 
   useEffect(() => {
     const fetchClaims = async () => {
